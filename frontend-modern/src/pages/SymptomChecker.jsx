@@ -408,21 +408,22 @@ export default function SymptomChecker() {
   const selectedBodyData = anatomyParts.find((part) => part.id === selectedBodyPart) || anatomyParts[0];
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-[32px] border border-slate-800 bg-slate-950/90 p-6 shadow-2xl shadow-slate-950/20 backdrop-blur-xl">
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Header Panel */}
+      <div className="rounded-lg border border-medical-gray-200 bg-medical-white p-6 shadow-medical">
         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div className="max-w-2xl">
-            <h2 className="text-3xl font-semibold text-white tracking-tight">{t('title')}</h2>
-            <p className="mt-3 text-slate-400">{t('subtitle')}</p>
+            <h2 className="text-3xl font-bold text-medical-gray-900 tracking-tight">{t('title')}</h2>
+            <p className="mt-2 text-medical-gray-600">{t('subtitle')}</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <select value={language} onChange={(e) => setLanguage(e.target.value)} className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white">
+            <select value={language} onChange={(e) => setLanguage(e.target.value)} className="rounded-lg border border-medical-gray-200 bg-medical-soft-white px-4 py-2.5 text-sm font-medium text-medical-gray-700 outline-none focus:border-medical-blue-light focus:ring-2 focus:ring-medical-blue-light/20">
               <option value="en">English</option>
               <option value="hi">हिंदी</option>
               <option value="mr">मराठी</option>
             </select>
-            <button type="button" onClick={handleAnalyze} className="rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-500/20 transition hover:bg-brand-400">
-              {t('runAnalysis')}
+            <button type="button" onClick={handleAnalyze} disabled={loading} className="rounded-lg bg-medical-blue-light px-6 py-2.5 text-sm font-semibold text-white shadow-medical transition hover:bg-medical-blue-dark disabled:opacity-60">
+              {loading ? 'Analyzing...' : t('runAnalysis')}
             </button>
           </div>
         </div>
@@ -430,118 +431,129 @@ export default function SymptomChecker() {
 
       <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
         <div className="space-y-6">
-          <section className="rounded-[32px] border border-slate-800 bg-slate-950/80 p-6">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          {/* Patient Details Section */}
+          <section className="rounded-lg border border-medical-gray-200 bg-medical-white p-6 shadow-medical">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
               <div>
-                <h3 className="text-xl font-semibold text-white">{t('patientDetails')}</h3>
-                <p className="mt-2 text-sm text-slate-400">{t('patientSearching')}</p>
+                <h3 className="text-xl font-bold text-medical-gray-900">{t('patientDetails')}</h3>
+                <p className="mt-1 text-sm text-medical-gray-500">{t('patientSearching')}</p>
               </div>
-              <div className="grid gap-3 sm:grid-cols-2 md:w-[360px]">
-                <input value={patientSearch} onChange={(e) => setPatientSearch(e.target.value)} placeholder={t('patientSearching')} className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
-                <button type="button" onClick={() => fetchPatients(patientSearch).then((data) => setPatients(data || [])).catch(() => {})} className="rounded-2xl bg-slate-800 px-4 py-3 text-sm text-white hover:bg-slate-700">
-                  {t('patientSearching')}
+              <div className="flex gap-3 md:w-[360px]">
+                <input value={patientSearch} onChange={(e) => setPatientSearch(e.target.value)} placeholder={t('patientSearching')} className="w-full rounded-lg border border-medical-gray-200 bg-medical-soft-white px-4 py-2 text-sm text-medical-gray-900 outline-none focus:border-medical-blue-light focus:ring-2 focus:ring-medical-blue-light/20" />
+                <button type="button" onClick={() => fetchPatients(patientSearch).then((data) => setPatients(data || [])).catch(() => {})} className="rounded-lg bg-medical-gray-100 px-4 py-2 text-sm font-medium text-medical-gray-700 hover:bg-medical-gray-200 transition">
+                  Search
                 </button>
               </div>
             </div>
-            <div className="mt-6 grid gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
-              <div className="space-y-4 rounded-3xl border border-slate-800 bg-slate-900/70 p-4">
+            
+            <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
+              {/* Patient List */}
+              <div className="space-y-3 rounded-lg border border-medical-gray-100 bg-medical-soft-white p-4 max-h-[320px] overflow-y-auto">
                 {patients.length ? patients.map((p) => (
-                  <button key={p.id} type="button" onClick={() => setSelectedPatient(p.id)} className={`w-full rounded-3xl border px-4 py-3 text-left transition ${selectedPatient === p.id ? 'border-brand-500 bg-brand-500/10' : 'border-slate-800 bg-slate-950/80 hover:border-slate-600'}`}>
-                    <p className="font-semibold text-white">{p.name}</p>
-                    <p className="text-sm text-slate-400">{p.village || p.district || '—'}</p>
+                  <button key={p.id} type="button" onClick={() => setSelectedPatient(p.id)} className={`w-full rounded-lg border px-4 py-3 text-left transition ${selectedPatient === p.id ? 'border-medical-blue-light bg-medical-blue-light/10' : 'border-medical-gray-200 bg-white hover:border-medical-blue-light/50'}`}>
+                    <p className="font-semibold text-medical-gray-900">{p.name}</p>
+                    <p className="text-xs text-medical-gray-500 mt-1">{p.village || p.district || '—'}</p>
                   </button>
-                )) : <p className="text-slate-500">{t('emptyPatients')}</p>}
+                )) : <p className="text-sm text-medical-gray-500 p-2">{t('emptyPatients')}</p>}
               </div>
-              <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-inner shadow-slate-950/30">
+              
+              {/* Selected Patient Overview */}
+              <div className="rounded-lg border border-medical-gray-100 bg-white p-6 shadow-sm">
                 {patient ? (
                   <>
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-brand-500/20 text-2xl text-brand-200">{patient.name?.split(' ').map((part) => part[0]).join('').slice(0,2)}</div>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-medical-blue-light to-medical-blue-dark text-xl font-bold text-white shadow-sm">
+                        {patient.name?.charAt(0).toUpperCase() || 'P'}
+                      </div>
                       <div>
-                        <p className="text-lg font-semibold text-white">{patient.name}</p>
-                        <p className="text-sm text-slate-400">{patient.health_id || patient.id}</p>
+                        <p className="text-lg font-bold text-medical-gray-900">{patient.name}</p>
+                        <p className="text-sm text-medical-gray-500">{patient.health_id || patient.id}</p>
                       </div>
                     </div>
-                    <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                    <div className="grid gap-3 sm:grid-cols-2 mb-6">
                       <Stat label={t('age')} value={patient.age ?? age} />
                       <Stat label={t('gender')} value={patient.gender || gender} />
                       <Stat label={t('village')} value={patient.village || patient.district || '—'} />
                       <Stat label={t('healthId')} value={patient.health_id || patient.id} />
                     </div>
-                    <div className="mt-6 flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2">
                       {(patient.medical_history || ['Primary care']).slice(0, 3).map((tag) => (
-                        <span key={tag} className="rounded-full bg-slate-800 px-3 py-2 text-xs text-slate-300">{tag}</span>
+                        <span key={tag} className="rounded-full bg-medical-gray-100 px-3 py-1 text-xs font-medium text-medical-gray-600 border border-medical-gray-200">{tag}</span>
                       ))}
-                      {patient.is_pregnant && <span className="rounded-full bg-rose-500/10 px-3 py-2 text-xs text-rose-200">Pregnant</span>}
+                      {patient.is_pregnant && <span className="rounded-full bg-medical-red/10 px-3 py-1 text-xs font-medium text-medical-red border border-medical-red/20">Pregnant</span>}
                     </div>
                   </>
-                ) : <p className="text-slate-400">{t('selectPatientFirst')}</p>}
+                ) : <div className="h-full flex items-center justify-center text-medical-gray-400 text-sm">{t('selectPatientFirst')}</div>}
               </div>
             </div>
           </section>
 
-          <section className="rounded-[32px] border border-slate-800 bg-slate-950/80 p-6">
-            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          {/* Interactive Body Parts */}
+          <section className="rounded-lg border border-medical-gray-200 bg-medical-white p-6 shadow-medical">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
               <div>
-                <h3 className="text-xl font-semibold text-white">{t('bodyParts')}</h3>
-                <p className="mt-2 text-sm text-slate-400">{t('anatomyGender')} · {t('bodyView')}</p>
+                <h3 className="text-xl font-bold text-medical-gray-900">{t('bodyParts')}</h3>
+                <p className="mt-1 text-sm text-medical-gray-500">{t('anatomyGender')} · {t('bodyView')}</p>
               </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <select value={anatomyGender} onChange={(e) => setAnatomyGender(e.target.value)} className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white">
+              <div className="flex gap-3">
+                <select value={anatomyGender} onChange={(e) => setAnatomyGender(e.target.value)} className="rounded-lg border border-medical-gray-200 bg-medical-soft-white px-4 py-2 text-sm text-medical-gray-700 outline-none focus:border-medical-blue-light focus:ring-2 focus:ring-medical-blue-light/20">
                   {ANATOMY_GENDERS.map((option) => (
                     <option key={option} value={option}>{option.charAt(0).toUpperCase() + option.slice(1)}</option>
                   ))}
                 </select>
-                <select value={bodyView} onChange={(e) => setBodyView(e.target.value)} className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white">
+                <select value={bodyView} onChange={(e) => setBodyView(e.target.value)} className="rounded-lg border border-medical-gray-200 bg-medical-soft-white px-4 py-2 text-sm text-medical-gray-700 outline-none focus:border-medical-blue-light focus:ring-2 focus:ring-medical-blue-light/20">
                   <option value="front">Front</option>
                   <option value="back">Back</option>
                 </select>
               </div>
             </div>
-            <div className="mt-6 grid gap-5 lg:grid-cols-[1fr_240px]">
-              <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-4">
-                <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[32px] bg-slate-950/80 p-4">
+            
+            <div className="grid gap-6 lg:grid-cols-[1fr_240px]">
+              {/* Body SVG */}
+              <div className="rounded-lg border border-medical-gray-100 bg-medical-soft-white p-6 flex justify-center">
+                <div className="relative aspect-[3/4] w-full max-w-[240px]">
                   <svg viewBox="0 0 200 320" className="h-full w-full">
                     <defs>
-                      <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.25" />
-                        <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.1" />
+                      <linearGradient id="bodyBg" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#F8FAFC" />
+                        <stop offset="100%" stopColor="#F1F5F9" />
                       </linearGradient>
                     </defs>
-                    <rect x="0" y="0" width="200" height="320" rx="24" fill="url(#glow)" />
+                    <rect x="0" y="0" width="200" height="320" rx="24" fill="url(#bodyBg)" stroke="#E2E8F0" strokeWidth="2" />
                     <g transform="translate(0 12)">
                       {bodyView === 'front' ? (
                         <>
-                          <circle cx="100" cy="46" r="28" fill={selectedBodyPart === 'head' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'head' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('head')} cursor="pointer" />
-                          <rect x="60" y="84" width="80" height="90" rx="22" fill={selectedBodyPart === 'chest' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'chest' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('chest')} cursor="pointer" />
-                          <rect x="70" y="186" width="60" height="90" rx="18" fill={selectedBodyPart === 'stomach' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'stomach' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('stomach')} cursor="pointer" />
-                          <rect x="40" y="92" width="20" height="68" rx="10" fill="#1f2937" stroke="#60a5fa" strokeWidth="2" onClick={() => selectBodyPart('chest')} cursor="pointer" />
-                          <rect x="140" y="92" width="20" height="68" rx="10" fill="#1f2937" stroke="#60a5fa" strokeWidth="2" onClick={() => selectBodyPart('chest')} cursor="pointer" />
-                          <rect x="58" y="284" width="28" height="34" rx="12" fill={selectedBodyPart === 'legs' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'legs' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('legs')} cursor="pointer" />
-                          <rect x="114" y="284" width="28" height="34" rx="12" fill={selectedBodyPart === 'legs' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'legs' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('legs')} cursor="pointer" />
-                          <circle cx="150" cy="140" r="16" fill={selectedBodyPart === 'skin' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'skin' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('skin')} cursor="pointer" />
+                          <circle cx="100" cy="46" r="28" fill={selectedBodyPart === 'head' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'head' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('head')} cursor="pointer" />
+                          <rect x="60" y="84" width="80" height="90" rx="22" fill={selectedBodyPart === 'chest' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'chest' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('chest')} cursor="pointer" />
+                          <rect x="70" y="186" width="60" height="90" rx="18" fill={selectedBodyPart === 'stomach' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'stomach' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('stomach')} cursor="pointer" />
+                          <rect x="40" y="92" width="20" height="68" rx="10" fill="#CBD5E1" stroke="#0284C7" strokeWidth="1" onClick={() => selectBodyPart('chest')} cursor="pointer" />
+                          <rect x="140" y="92" width="20" height="68" rx="10" fill="#CBD5E1" stroke="#0284C7" strokeWidth="1" onClick={() => selectBodyPart('chest')} cursor="pointer" />
+                          <rect x="58" y="284" width="28" height="34" rx="12" fill={selectedBodyPart === 'legs' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'legs' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('legs')} cursor="pointer" />
+                          <rect x="114" y="284" width="28" height="34" rx="12" fill={selectedBodyPart === 'legs' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'legs' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('legs')} cursor="pointer" />
+                          <circle cx="150" cy="140" r="16" fill={selectedBodyPart === 'skin' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'skin' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('skin')} cursor="pointer" />
                         </>
                       ) : (
                         <>
-                          <circle cx="100" cy="46" r="28" fill={selectedBodyPart === 'head' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'head' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('head')} cursor="pointer" />
-                          <rect x="76" y="90" width="48" height="140" rx="22" fill={selectedBodyPart === 'spine' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'spine' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('spine')} cursor="pointer" />
-                          <rect x="58" y="90" width="24" height="70" rx="12" fill="#1f2937" stroke="#60a5fa" strokeWidth="2" onClick={() => selectBodyPart('spine')} cursor="pointer" />
-                          <rect x="118" y="90" width="24" height="70" rx="12" fill="#1f2937" stroke="#60a5fa" strokeWidth="2" onClick={() => selectBodyPart('spine')} cursor="pointer" />
-                          <rect x="70" y="232" width="60" height="90" rx="18" fill={selectedBodyPart === 'lower_back' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'lower_back' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('lower_back')} cursor="pointer" />
-                          <rect x="42" y="132" width="24" height="60" rx="12" fill={selectedBodyPart === 'neck' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'neck' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('neck')} cursor="pointer" />
-                          <rect x="134" y="132" width="24" height="60" rx="12" fill={selectedBodyPart === 'neck' ? '#38bdf8' : '#1f2937'} stroke="#60a5fa" strokeWidth="2" style={{ filter: selectedBodyPart === 'neck' ? 'drop-shadow(0 0 16px rgba(56,189,248,0.45))' : undefined }} onClick={() => selectBodyPart('neck')} cursor="pointer" />
+                          <circle cx="100" cy="46" r="28" fill={selectedBodyPart === 'head' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'head' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('head')} cursor="pointer" />
+                          <rect x="76" y="90" width="48" height="140" rx="22" fill={selectedBodyPart === 'spine' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'spine' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('spine')} cursor="pointer" />
+                          <rect x="58" y="90" width="24" height="70" rx="12" fill="#CBD5E1" stroke="#0284C7" strokeWidth="1" onClick={() => selectBodyPart('spine')} cursor="pointer" />
+                          <rect x="118" y="90" width="24" height="70" rx="12" fill="#CBD5E1" stroke="#0284C7" strokeWidth="1" onClick={() => selectBodyPart('spine')} cursor="pointer" />
+                          <rect x="70" y="232" width="60" height="90" rx="18" fill={selectedBodyPart === 'lower_back' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'lower_back' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('lower_back')} cursor="pointer" />
+                          <rect x="42" y="132" width="24" height="60" rx="12" fill={selectedBodyPart === 'neck' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'neck' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('neck')} cursor="pointer" />
+                          <rect x="134" y="132" width="24" height="60" rx="12" fill={selectedBodyPart === 'neck' ? '#0EA5E9' : '#E2E8F0'} stroke="#0284C7" strokeWidth="1.5" style={{ filter: selectedBodyPart === 'neck' ? 'drop-shadow(0 4px 6px rgba(14,165,233,0.3))' : undefined }} onClick={() => selectBodyPart('neck')} cursor="pointer" />
                         </>
                       )}
                     </g>
                   </svg>
                 </div>
               </div>
-              <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-4 text-sm text-slate-300">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{bodyLabel(selectedBodyData?.id)}</p>
-                <p className="mt-4 text-white">{selectedBodyData?.symptoms.map((sym) => labelFor(sym)).join(', ')}</p>
-                <div className="mt-4 space-y-2">
+              
+              {/* Selected Body Part Symptoms */}
+              <div className="rounded-lg border border-medical-gray-100 bg-white p-5 shadow-sm">
+                <p className="text-xs uppercase tracking-widest font-semibold text-medical-gray-500 mb-4">{bodyLabel(selectedBodyData?.id)} Symptoms</p>
+                <div className="space-y-2">
                   {selectedBodyData?.symptoms.map((sym) => (
-                    <button key={sym} type="button" onClick={() => addSymptom(sym)} className="block w-full rounded-2xl bg-slate-800 px-4 py-2 text-left text-sm text-slate-200 hover:bg-slate-700">
+                    <button key={sym} type="button" onClick={() => addSymptom(sym)} className="w-full text-left px-3 py-2.5 rounded-lg border border-medical-gray-200 bg-medical-soft-white text-sm font-medium text-medical-gray-700 hover:bg-medical-blue-light/10 hover:border-medical-blue-light/30 transition">
                       + {labelFor(sym)}
                     </button>
                   ))}
@@ -550,158 +562,165 @@ export default function SymptomChecker() {
             </div>
           </section>
 
-          <section className="rounded-[32px] border border-slate-800 bg-slate-950/80 p-6">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          {/* Search & Add Symptoms */}
+          <section className="rounded-lg border border-medical-gray-200 bg-medical-white p-6 shadow-medical">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
               <div>
-                <h3 className="text-xl font-semibold text-white">{t('searchSymptom')}</h3>
-                <p className="mt-2 text-sm text-slate-400">{t('filterCategory')}</p>
+                <h3 className="text-xl font-bold text-medical-gray-900">{t('searchSymptom')}</h3>
+                <p className="mt-1 text-sm text-medical-gray-500">{t('filterCategory')}</p>
               </div>
-              <div className="grid gap-3 sm:grid-cols-2 md:w-[360px]">
-                <input value={searchSymptom} onChange={(e) => setSearchSymptom(e.target.value)} placeholder={t('searchSymptom')} className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
-                <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value)} className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white">
+              <div className="flex gap-3 md:w-[420px]">
+                <input value={searchSymptom} onChange={(e) => setSearchSymptom(e.target.value)} placeholder={t('searchSymptom')} className="w-full rounded-lg border border-medical-gray-200 bg-medical-soft-white px-4 py-2 text-sm text-medical-gray-900 outline-none focus:border-medical-blue-light focus:ring-2 focus:ring-medical-blue-light/20" />
+                <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value)} className="w-[160px] flex-shrink-0 rounded-lg border border-medical-gray-200 bg-medical-soft-white px-3 py-2 text-sm text-medical-gray-700 outline-none focus:border-medical-blue-light focus:ring-2 focus:ring-medical-blue-light/20">
                   {Object.keys(SYMPTOM_CATEGORIES).map((category) => (
                     <option key={category} value={category}>{category}</option>
                   ))}
                 </select>
               </div>
             </div>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {shownSymptoms.map((symptom) => (
-                <button key={symptom} type="button" onClick={() => addSymptom(symptom)} className={`rounded-3xl border px-4 py-3 text-left transition ${selectedSymptoms.includes(symptom) ? 'border-brand-500 bg-brand-500/10 text-white' : 'border-slate-800 bg-slate-950/80 text-slate-300 hover:border-slate-600'}`}>
-                  <p className="font-semibold">{labelFor(symptom)}</p>
-                  <p className="mt-2 text-xs text-slate-400">{symptom.replace(/_/g, ' ')}</p>
+                <button key={symptom} type="button" onClick={() => addSymptom(symptom)} className={`rounded-lg border p-4 text-left transition ${selectedSymptoms.includes(symptom) ? 'border-medical-blue-light bg-medical-blue-light/10' : 'border-medical-gray-200 bg-medical-soft-white hover:border-medical-blue-light/50'}`}>
+                  <p className="font-semibold text-medical-gray-900">{labelFor(symptom)}</p>
+                  <p className="mt-1 text-xs text-medical-gray-500 capitalize">{symptom.replace(/_/g, ' ')}</p>
                 </button>
               ))}
             </div>
           </section>
 
-          <section className="rounded-[32px] border border-slate-800 bg-slate-950/80 p-6">
-            <div className="flex flex-wrap items-center gap-3">
+          {/* Current Selection & Parameters */}
+          <section className="rounded-lg border border-medical-gray-200 bg-medical-white p-6 shadow-medical border-l-4 border-l-medical-blue-light">
+            <div className="mb-6 flex flex-wrap gap-2">
               {selectedSymptoms.length ? selectedSymptoms.map((symptom) => (
-                <button key={symptom} type="button" onClick={() => addSymptom(symptom)} className="rounded-full bg-brand-500/10 px-4 py-2 text-sm text-white transition hover:bg-brand-500/20">
-                  {labelFor(symptom)} ×
-                </button>
-              )) : <p className="text-slate-500">{t('searchSymptom')}...</p>}
+                <span key={symptom} onClick={() => addSymptom(symptom)} className="inline-flex items-center gap-2 cursor-pointer rounded-full bg-medical-blue-light/10 border border-medical-blue-light/20 px-4 py-1.5 text-sm font-medium text-medical-blue-dark transition hover:bg-medical-blue-light/20">
+                  {labelFor(symptom)} <span className="text-lg leading-none">×</span>
+                </span>
+              )) : <span className="text-sm text-medical-gray-500 italic">No symptoms selected...</span>}
             </div>
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
-              <label className="text-sm text-slate-300">
-                {t('age')}
-                <input type="number" min="0" value={age} onChange={(e) => setAge(e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white" />
-              </label>
-              <label className="text-sm text-slate-300">
-                {t('severity')}
-                <select value={severity} onChange={(e) => setSeverity(e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white">
+            
+            <div className="grid gap-4 sm:grid-cols-3 pt-6 border-t border-medical-gray-100">
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-medical-gray-600 mb-2">{t('age')}</label>
+                <input type="number" min="0" value={age} onChange={(e) => setAge(e.target.value)} className="w-full rounded-lg border border-medical-gray-200 bg-medical-soft-white px-4 py-2.5 text-medical-gray-900 outline-none focus:border-medical-blue-light focus:ring-2 focus:ring-medical-blue-light/20" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-medical-gray-600 mb-2">{t('severity')}</label>
+                <select value={severity} onChange={(e) => setSeverity(e.target.value)} className="w-full rounded-lg border border-medical-gray-200 bg-medical-soft-white px-4 py-2.5 text-medical-gray-900 outline-none focus:border-medical-blue-light focus:ring-2 focus:ring-medical-blue-light/20">
                   <option value="mild">Mild</option>
                   <option value="moderate">Moderate</option>
                   <option value="severe">Severe</option>
                   <option value="critical">Critical</option>
                 </select>
-              </label>
-              <label className="text-sm text-slate-300">
-                {t('duration')}
-                <input type="number" min="1" value={duration} onChange={(e) => setDuration(e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white" />
-              </label>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-medical-gray-600 mb-2">{t('duration')}</label>
+                <input type="number" min="1" value={duration} onChange={(e) => setDuration(e.target.value)} className="w-full rounded-lg border border-medical-gray-200 bg-medical-soft-white px-4 py-2.5 text-medical-gray-900 outline-none focus:border-medical-blue-light focus:ring-2 focus:ring-medical-blue-light/20" />
+              </div>
             </div>
           </section>
         </div>
 
+        {/* Right Sidebar - Assistants & Results */}
         <div className="space-y-6">
-          <section className="rounded-[32px] border border-slate-800 bg-slate-950/80 p-6">
-            <div className="flex items-center justify-between gap-3">
+          {/* Voice Assistant */}
+          <section className="rounded-lg border border-medical-gray-200 bg-medical-white p-6 shadow-medical">
+            <div className="flex items-center justify-between gap-3 mb-4">
               <div>
-                <h3 className="text-xl font-semibold text-white">{t('voiceAssistant')}</h3>
-                <p className="mt-2 text-sm text-slate-400">{t('voiceHint')}</p>
+                <h3 className="font-bold text-medical-gray-900">{t('voiceAssistant')}</h3>
+                <p className="text-xs text-medical-gray-500 mt-1">{t('voiceHint')}</p>
               </div>
-              <button type="button" onClick={startVoice} className={`rounded-2xl px-5 py-3 text-sm font-semibold transition ${listening ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-white hover:bg-slate-700'}`}>
-                {listening ? t('stopVoice') : t('startVoice')}
+              <button type="button" onClick={startVoice} className={`rounded-lg px-4 py-2 text-sm font-semibold transition shadow-sm ${listening ? 'bg-medical-red text-white animate-pulse' : 'bg-medical-gray-100 text-medical-gray-700 hover:bg-medical-gray-200'}`}>
+                {listening ? 'Stop' : 'Start'}
               </button>
             </div>
-            <div className="mt-5 grid gap-3">
-              <select value={language} onChange={(e) => setLanguage(e.target.value)} className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white">
+            <div className="space-y-3">
+              <select value={language} onChange={(e) => setLanguage(e.target.value)} className="w-full rounded-lg border border-medical-gray-200 bg-medical-soft-white px-3 py-2 text-sm text-medical-gray-700 outline-none">
                 <option value="en">English</option>
                 <option value="hi">हिंदी</option>
                 <option value="mr">मराठी</option>
               </select>
-              <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-4 text-sm text-slate-200">
-                <p><span className="font-semibold text-slate-100">{t('transcript')}:</span> {transcript || '—'}</p>
-                <p className="mt-2 text-slate-400">{voiceResponse || 'Ready to receive commands.'}</p>
+              <div className="rounded-lg border border-medical-gray-100 bg-medical-soft-white p-4 text-sm">
+                <p className="text-medical-gray-900"><span className="font-semibold text-medical-gray-600 uppercase text-xs tracking-wider mr-2">Transcript:</span> {transcript || '—'}</p>
+                {voiceResponse && <p className="mt-3 pt-3 border-t border-medical-gray-200 font-medium text-medical-blue-dark">{voiceResponse}</p>}
               </div>
             </div>
           </section>
 
-          <section className="rounded-[32px] border border-slate-800 bg-slate-950/80 p-6">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <h3 className="text-xl font-semibold text-white">{t('chatAssistant')}</h3>
-                <p className="mt-2 text-sm text-slate-400">{t('chatHint')}</p>
-              </div>
+          {/* Chat Assistant */}
+          <section className="rounded-lg border border-medical-gray-200 bg-medical-white p-6 shadow-medical">
+            <div className="mb-4">
+              <h3 className="font-bold text-medical-gray-900">{t('chatAssistant')}</h3>
+              <p className="text-xs text-medical-gray-500 mt-1">{t('chatHint')}</p>
             </div>
-            <div className="mt-5 space-y-3 rounded-3xl border border-slate-800 bg-slate-900/70 p-4">
+            <div className="mb-4 space-y-3 rounded-lg border border-medical-gray-100 bg-medical-soft-white p-4 max-h-[250px] overflow-y-auto">
               {chatHistory.map((message, index) => (
-                <div key={`${message.role}-${index}`} className={`rounded-3xl px-4 py-3 ${message.role === 'assistant' ? 'bg-slate-950 text-slate-100' : 'bg-slate-800 text-slate-200'}`}>
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{message.role === 'assistant' ? 'AI' : 'You'}</p>
-                  <p className="mt-2 text-sm">{message.text}</p>
+                <div key={`${message.role}-${index}`} className={`rounded-lg p-3 text-sm ${message.role === 'assistant' ? 'bg-medical-blue-light/10 text-medical-gray-900 border border-medical-blue-light/20' : 'bg-white text-medical-gray-800 border border-medical-gray-200'}`}>
+                  <p className="text-[10px] uppercase font-bold tracking-wider mb-1 text-medical-gray-500">{message.role === 'assistant' ? 'AI Assistant' : 'You'}</p>
+                  <p>{message.text}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-4 grid gap-3">
-              <textarea rows="3" value={chatInput} onChange={(e) => setChatInput(e.target.value)} placeholder={t('chatHint')} className="w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white outline-none" />
-              <button type="button" onClick={handleChatSubmit} className="rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-400">
+            <div className="flex flex-col gap-2">
+              <textarea rows="2" value={chatInput} onChange={(e) => setChatInput(e.target.value)} placeholder={t('chatHint')} className="w-full rounded-lg border border-medical-gray-200 bg-white p-3 text-sm text-medical-gray-900 outline-none focus:border-medical-blue-light focus:ring-1 focus:ring-medical-blue-light" />
+              <button type="button" onClick={handleChatSubmit} className="w-full rounded-lg bg-medical-blue-light py-2 text-sm font-semibold text-white hover:bg-medical-blue-dark transition shadow-sm">
                 {t('ask')}
               </button>
             </div>
           </section>
 
-          <section className="rounded-[32px] border border-slate-800 bg-slate-950/80 p-6">
-            <div className="flex items-center justify-between gap-4">
+          {/* Analysis Results */}
+          <section className="rounded-lg border border-medical-gray-200 bg-medical-white p-6 shadow-medical">
+            <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-xl font-semibold text-white">{t('recommendations')}</h3>
-                <p className="mt-2 text-sm text-slate-400">{savedAt ? `${t('saved')} ${savedAt.toLocaleString()}` : 'Awaiting AI review.'}</p>
+                <h3 className="font-bold text-medical-gray-900">Analysis Results</h3>
+                <p className="text-xs text-medical-gray-500 mt-1">{savedAt ? `Saved ${savedAt.toLocaleTimeString()}` : 'Awaiting review'}</p>
               </div>
               <RiskBadge level={result?.risk_level || 'Green'} />
             </div>
-            <div className="mt-5 grid gap-4">
-              <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-4">
-                <p className="text-sm text-slate-400">{t('emergency')}</p>
-                <p className="mt-2 text-white">{result?.emergency_level || 'low'}</p>
+            
+            <div className="grid gap-3 mb-6">
+              <div className="flex items-center justify-between rounded-lg border border-medical-gray-100 bg-medical-soft-white p-3">
+                <span className="text-sm font-medium text-medical-gray-600">{t('emergency')}</span>
+                <span className="text-sm font-bold text-medical-gray-900 capitalize">{result?.emergency_level || 'Low'}</span>
               </div>
-              <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-4">
-                <p className="text-sm text-slate-400">{t('infection')}</p>
-                <p className="mt-2 text-white">{result?.infection_risk || 'low'}</p>
+              <div className="flex items-center justify-between rounded-lg border border-medical-gray-100 bg-medical-soft-white p-3">
+                <span className="text-sm font-medium text-medical-gray-600">{t('infection')}</span>
+                <span className="text-sm font-bold text-medical-gray-900 capitalize">{result?.infection_risk || 'Low'}</span>
               </div>
-              <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-4">
-                <p className="text-sm text-slate-400">{t('dehydration')}</p>
-                <p className="mt-2 text-white">{result?.dehydration_risk || 'low'}</p>
+              <div className="flex items-center justify-between rounded-lg border border-medical-gray-100 bg-medical-soft-white p-3">
+                <span className="text-sm font-medium text-medical-gray-600">{t('dehydration')}</span>
+                <span className="text-sm font-bold text-medical-gray-900 capitalize">{result?.dehydration_risk || 'Low'}</span>
               </div>
             </div>
-            {result?.recommendations && (
-              <ul className="mt-5 list-disc space-y-2 pl-5 text-sm text-slate-300">
-                {result.recommendations.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-            )}
+            
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-medical-gray-500 mb-3">{t('recommendations')}</h4>
+              {result?.recommendations ? (
+                <ul className="list-disc pl-5 space-y-2 text-sm text-medical-gray-700">
+                  {result.recommendations.map((item, idx) => <li key={idx}>{item}</li>)}
+                </ul>
+              ) : (
+                <p className="text-sm text-medical-gray-500 italic border-l-2 border-medical-gray-200 pl-3">Run analysis to see AI recommendations</p>
+              )}
+            </div>
           </section>
         </div>
       </div>
 
-      {error && <div className="rounded-[32px] border border-rose-500/40 bg-rose-500/10 p-4 text-sm text-rose-200">{error}</div>}
+      {error && (
+        <div className="fixed bottom-6 right-6 rounded-lg border border-medical-red/30 bg-medical-red/10 p-4 text-sm font-medium text-medical-red shadow-lg max-w-sm backdrop-blur-sm z-50">
+          {error}
+        </div>
+      )}
     </div>
   );
 }
 
 function Stat({ label, value }) {
   return (
-    <div className="rounded-3xl bg-slate-950/90 p-4 text-sm">
-      <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{label}</p>
-      <p className="mt-2 font-semibold text-white">{value}</p>
-    </div>
-  );
-}
-
-function SummaryCard({ label, value }) {
-  return (
-    <div className="rounded-3xl bg-slate-950/90 p-4 text-sm">
-      <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{label}</p>
-      <p className="mt-2 font-semibold text-white">{value}</p>
+    <div className="rounded-lg border border-medical-gray-200 bg-medical-soft-white p-3">
+      <p className="text-[10px] uppercase font-bold tracking-widest text-medical-gray-500 mb-1">{label}</p>
+      <p className="text-sm font-semibold text-medical-gray-900 truncate">{value}</p>
     </div>
   );
 }

@@ -86,6 +86,7 @@ def create_patient(
             "username": username,
             "password": password,
             "health_id": health_id,
+            "phone": data.phone,
         },
     }
 

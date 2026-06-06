@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchPatients, triggerSOS } from '../services/api';
+import { AlertCircle } from 'lucide-react';
 
 export default function EmergencySOS() {
   const [status, setStatus] = useState('');
@@ -48,14 +49,19 @@ export default function EmergencySOS() {
   };
 
   return (
-    <div className="rounded-[32px] border border-rose-500/30 bg-gradient-to-br from-rose-950/80 to-slate-950/80 p-10 text-center">
-      <p className="text-sm uppercase tracking-[0.2em] text-rose-300">Emergency</p>
-      <h2 className="mt-4 text-3xl font-bold text-white">One-tap SOS</h2>
-      <p className="mx-auto mt-3 max-w-md text-slate-400">Notifies doctors, admins, and suggests nearest hospitals instantly.</p>
+    <div className="max-w-3xl mx-auto rounded-lg border-2 border-medical-red/20 bg-gradient-to-br from-medical-white to-medical-red/5 p-10 text-center shadow-medical">
+      <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-medical-red/10 mb-6">
+        <AlertCircle className="h-12 w-12 text-medical-red" />
+      </div>
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-medical-red">Emergency Response</p>
+      <h2 className="mt-4 text-4xl font-bold text-medical-gray-900">One-tap SOS</h2>
+      <p className="mx-auto mt-4 max-w-md text-medical-gray-600 leading-relaxed">
+        Instantly notifies doctors, administrators, and provides routing to the nearest equipped hospital.
+      </p>
       {patients.length > 0 && (
-        <div className="mx-auto mt-6 max-w-sm text-left">
-          <label className="block text-sm text-slate-300">Select patient</label>
-          <select value={selectedPatient} onChange={(e) => setSelectedPatient(e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white">
+        <div className="mx-auto mt-8 max-w-sm text-left">
+          <label className="block text-sm font-semibold text-medical-gray-700 mb-2">Select patient for SOS context</label>
+          <select value={selectedPatient} onChange={(e) => setSelectedPatient(e.target.value)} className="w-full rounded-lg border border-medical-gray-200 bg-medical-soft-white px-4 py-3 text-medical-gray-900 outline-none focus:border-medical-red focus:ring-2 focus:ring-medical-red/20 shadow-sm transition">
             {patients.map((patient) => (
               <option key={patient.id} value={patient.id}>{patient.name}{patient.health_id ? ` • ${patient.health_id}` : ''}</option>
             ))}
@@ -66,11 +72,15 @@ export default function EmergencySOS() {
         type="button"
         onClick={send}
         disabled={loading}
-        className="mt-8 rounded-full bg-rose-500 px-12 py-6 text-lg font-bold text-white shadow-xl shadow-rose-500/40 hover:bg-rose-400 disabled:opacity-60"
+        className="mt-10 rounded-full bg-medical-red px-14 py-5 text-xl font-bold text-white shadow-lg shadow-medical-red/30 transition hover:bg-red-600 hover:shadow-xl hover:-translate-y-1 active:translate-y-0 disabled:opacity-60 disabled:hover:translate-y-0"
       >
-        {loading ? 'Sending...' : 'TRIGGER SOS'}
+        {loading ? 'Dispatching...' : 'TRIGGER SOS'}
       </button>
-      {status && <p className="mt-6 text-sm text-emerald-300">{status}</p>}
+      {status && (
+        <div className="mx-auto mt-8 max-w-md rounded-lg border border-medical-green/20 bg-medical-green/10 p-4">
+          <p className="text-sm font-semibold text-medical-green">{status}</p>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: ArogyaSakhi-AI-backend
+    env: python
+    pythonVersion: 3.12
+    plan: free
+    branch: main
+    root: backend-fastapi
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    autoDeploy: true
+    healthCheckPath: /health

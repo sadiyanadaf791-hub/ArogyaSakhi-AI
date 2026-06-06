@@ -203,8 +203,43 @@ def _serialize_alert(alert: EmergencyAlert, db: Session) -> dict:
     patient = None
     triggered_by = None
     assigned_doctor = None
+    ai_predictions = []
+    uploaded_images = []
+    
     if alert.patient_id:
         patient = db.query(Patient).filter(Patient.id == alert.patient_id).first()
+        # Get latest AI predictions for context
+        predictions = db.query(AIPrediction).filter(
+            AIPrediction.patient_id == alert.patient_id
+        ).order_by(AIPrediction.created_at.desc()).limit(5).all()
+        ai_predictions = [
+            {
+                "id": p.id,
+                "model_type": p.model_type,
+                "probable_condition": p.probable_condition,
+                "risk_level": p.risk_level,
+                "risk_score": p.risk_score,
+                "created_at": p.created_at.isoformat() if p.created_at else None,
+            }
+            for p in predictions
+        ]
+        
+        # Get uploaded images
+        from app.models.uploaded_image import UploadedImage
+        images = db.query(UploadedImage).filter(
+            UploadedImage.patient_id == alert.patient_id
+        ).order_by(UploadedImage.created_at.desc()).limit(5).all()
+        uploaded_images = [
+            {
+                "id": img.id,
+                "image_type": img.image_type,
+                "file_path": img.file_path,
+                "confidence": img.confidence,
+                "created_at": img.created_at.isoformat() if img.created_at else None,
+            }
+            for img in images
+        ]
+    
     if alert.triggered_by_user_id:
         triggered_by = db.query(User).filter(User.id == alert.triggered_by_user_id).first()
     if patient and patient.doctor_id:
@@ -240,6 +275,8 @@ def _serialize_alert(alert: EmergencyAlert, db: Session) -> dict:
         "created_at": alert.created_at.isoformat() if alert.created_at else None,
         "resolved_at": alert.resolved_at.isoformat() if alert.resolved_at else None,
         "meta": alert.meta,
+        "ai_predictions": ai_predictions,
+        "uploaded_images": uploaded_images,
     }
 
 

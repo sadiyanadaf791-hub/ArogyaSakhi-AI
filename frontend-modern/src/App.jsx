@@ -12,6 +12,7 @@ import SymptomChecker from './pages/SymptomChecker';
 import EmergencySOS from './pages/EmergencySOS';
 import HospitalFinder from './pages/HospitalFinder';
 import VoiceAssistant from './pages/VoiceAssistant';
+import ImageUpload from './pages/ImageUpload';
 import Settings from './pages/Settings';
 import AIAnalytics from './pages/AIAnalytics';
 import AIReports from './pages/AIReports';
@@ -38,7 +39,7 @@ function App() {
   const allRoles = ['PCW', 'ASHA_WORKER', 'DOCTOR', 'SPECIALIST', 'PATIENT', 'ADMIN', 'AUDITOR'];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-medical-white via-medical-soft-white to-blue-50 text-medical-gray-900">
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
@@ -56,6 +57,7 @@ function App() {
         <Route path="/emergency-sos" element={<ProtectedRoute allowedRoles={allRoles}><FeatureShell onLogout={handleLogout}><EmergencySOS /></FeatureShell></ProtectedRoute>} />
         <Route path="/hospital-finder" element={<ProtectedRoute allowedRoles={allRoles}><FeatureShell onLogout={handleLogout}><HospitalFinder /></FeatureShell></ProtectedRoute>} />
         <Route path="/voice-assistant" element={<ProtectedRoute allowedRoles={allRoles}><FeatureShell onLogout={handleLogout}><VoiceAssistant /></FeatureShell></ProtectedRoute>} />
+        <Route path="/image-upload" element={<ProtectedRoute allowedRoles={['PATIENT', 'PCW', 'ASHA_WORKER']}><ImageUpload onLogout={handleLogout} /></ProtectedRoute>} />
         <Route path="/settings" element={<ProtectedRoute allowedRoles={allRoles}><FeatureShell onLogout={handleLogout}><Settings /></FeatureShell></ProtectedRoute>} />
         <Route path="/ai-analytics" element={<ProtectedRoute allowedRoles={['DOCTOR', 'ADMIN', 'SPECIALIST', 'AUDITOR']}><FeatureShell onLogout={handleLogout}><AIAnalytics /></FeatureShell></ProtectedRoute>} />
         <Route path="/ai-reports" element={<ProtectedRoute allowedRoles={allRoles}><FeatureShell onLogout={handleLogout}><AIReports /></FeatureShell></ProtectedRoute>} />
