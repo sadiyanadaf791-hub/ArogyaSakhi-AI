@@ -124,3 +124,13 @@ App: http://localhost:5173
 | Doctor | doctor1 | doc123 |
 | Patient | patient1 | pat123 |
 | Admin | admin | admin123 |
+## Project Purpose
+
+ArogyaSakhi AI is designed to support rural healthcare by connecting patients, community health workers, doctors, and administrators through a unified digital platform. It combines AI-assisted health assessment with emergency assistance and role-based healthcare management.
+
+## Future Enhancements
+
+- Integration with additional healthcare and emergency services
+- Improved multilingual and voice-based assistance
+- Advanced analytics for healthcare workers and administrators
+- Secure cloud deployment and scalable infrastructure
