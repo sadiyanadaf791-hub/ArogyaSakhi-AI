@@ -9,7 +9,17 @@ This repository contains the frontend (React + Vite) and backend (FastAPI) for t
 ## Features
 - Role-based access for patients, ASHA workers, doctors, and administrators
 - AI-assisted healthcare support for faster preliminary assessment
-- Emergency assistance through SOS alerts and doctor assignmentgit status
+- Emergency assistance through SOS alerts and doctor assignment
+
+## Project Goals
+
+ArogyaSakhi AI aims to make rural healthcare more accessible, responsive, and technology-driven by:
+
+- Providing AI-assisted preliminary health assessment
+- Connecting patients with ASHA workers and doctors
+- Supporting faster emergency response through SOS assistance
+- Providing role-based dashboards for different healthcare stakeholders
+- Using digital tools to improve healthcare coordination and decision-making
 
 ## Tech Stack
 - Backend: Python, FastAPI, SQLAlchemy
