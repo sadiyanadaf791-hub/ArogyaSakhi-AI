@@ -74,8 +74,7 @@ Use `.env` at project root or `backend-fastapi/.env` to override defaults. Examp
 - Username: `admin`
 - Password: `admin123`
 
-## Screenshots
-Add screenshots under `docs/` and link them here.
+
 
 ## Contribution & Deployment
 Keep changes minimal: do not commit secrets. Use `.env.example` for public examples.
