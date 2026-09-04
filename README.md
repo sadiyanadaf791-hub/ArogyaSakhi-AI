@@ -134,3 +134,10 @@ ArogyaSakhi AI is designed to support rural healthcare by connecting patients, c
 - Advanced analytics for healthcare workers and administrators
 - Secure cloud deployment and scalable infrastructure
 The platform is designed with a role-based workflow so that each type of user can access the features and information relevant to their responsibilities.
+## Troubleshooting
+
+### Backend does not start
+Make sure Python 3.10+ is installed and the required dependencies are installed:
+
+```bash
+python -m pip install -r requirements.txt
