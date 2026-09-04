@@ -160,3 +160,10 @@ Make sure Python 3.10+ is installed and the required dependencies are installed:
 
 ```bash
 python -m pip install -r requirements.txt
+### Key Benefits
+
+- **Accessible Healthcare:** Helps rural users access preliminary healthcare guidance through a digital platform.
+- **Faster Emergency Response:** Enables SOS-based emergency assistance and coordination with healthcare professionals.
+- **Better Healthcare Coordination:** Connects patients, ASHA workers, doctors, and administrators through role-based workflows.
+- **AI-Assisted Support:** Uses AI to assist with preliminary assessment and healthcare-related decision support.
+- **Scalable Architecture:** Built with a modern React frontend and FastAPI backend for future expansion.
