@@ -27,7 +27,12 @@ project-root/
 ├── .gitignore
 └── .env.example
 ```
+### Directory Description
 
+- `frontend-modern/` — React + Vite frontend application and user interface.
+- `backend-fastapi/` — FastAPI backend containing APIs and server-side logic.
+- `docs/` — Project documentation and supporting resources.
+- `README.md` — Project overview, setup instructions, and usage information.
 ## Quickstart
 
 Prerequisites:
