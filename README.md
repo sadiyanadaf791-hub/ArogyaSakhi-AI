@@ -88,9 +88,9 @@ Use `.env` at project root or `backend-fastapi/.env` to override defaults. Examp
 
 ## Contribution & Deployment
 Keep changes minimal: do not commit secrets. Use `.env.example` for public examples.
-# ArogyaSakhi AI
 
-AI-powered intelligent rural healthcare and emergency assistance platform.
+
+
 
 ## Prerequisites
 
