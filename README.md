@@ -181,3 +181,26 @@ ArogyaSakhi AI supports different healthcare stakeholders through role-based acc
 4. Cases can be coordinated with ASHA workers or doctors.
 5. Emergency situations can trigger SOS assistance.
 6. Healthcare stakeholders manage activities through their respective dashboards.
+## System Architecture
+
+ArogyaSakhi AI follows a modern client-server architecture.
+
+```text
+┌──────────────────────────┐
+│     React + Vite UI      │
+│   Patient / ASHA / Doctor│
+│          / Admin         │
+└────────────┬─────────────┘
+             │ HTTP / REST
+             ↓
+┌──────────────────────────┐
+│      FastAPI Backend     │
+│ Authentication & APIs    │
+│ Healthcare Services      │
+│ AI-Assisted Processing   │
+└────────────┬─────────────┘
+             │
+       ┌─────┴─────┐
+       ↓           ↓
+   Database      AI Logic
+ MySQL/SQLite   Assessment
