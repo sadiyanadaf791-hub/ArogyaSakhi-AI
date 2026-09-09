@@ -12,7 +12,8 @@ This repository contains the frontend (React + Vite) and backend (FastAPI) for t
 - Emergency assistance through SOS alerts and doctor assignment
 - Symptom assessment support to help users understand possible health concerns
 - Emergency SOS workflow for rapid assistance and doctor coordination
-
+- Role-specific dashboards for patients, ASHA workers, doctors, and administrators
+- Healthcare data management through a centralized backend
 
 
 ## Project Goals
