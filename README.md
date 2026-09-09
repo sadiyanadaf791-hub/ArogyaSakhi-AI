@@ -181,3 +181,19 @@ ArogyaSakhi AI supports different healthcare stakeholders through role-based acc
 4. Cases can be coordinated with ASHA workers or doctors.
 5. Emergency situations can trigger SOS assistance.
 6. Healthcare stakeholders manage activities through their respective dashboards.
+## AI-Assisted Healthcare Workflow
+
+The platform uses an AI-assisted workflow to support preliminary healthcare assessment:
+
+```text
+Patient Input
+     ↓
+Symptom & Health Information
+     ↓
+AI-Assisted Assessment
+     ↓
+Preliminary Guidance
+     ↓
+Healthcare Professional Support
+     ↓
+Follow-up / Emergency Assistance
