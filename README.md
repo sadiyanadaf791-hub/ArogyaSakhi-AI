@@ -162,3 +162,22 @@ python -m pip install -r requirements.txt
 - **Better Healthcare Coordination:** Connects patients, ASHA workers, doctors, and administrators through role-based workflows.
 - **AI-Assisted Support:** Uses AI to assist with preliminary assessment and healthcare-related decision support.
 - **Scalable Architecture:** Built with a modern React frontend and FastAPI backend for future expansion.
+## User Roles & Workflow
+
+ArogyaSakhi AI supports different healthcare stakeholders through role-based access.
+
+| Role | Responsibilities |
+|------|------------------|
+| **Patient** | Access healthcare assistance, perform AI-assisted symptom checks, and raise emergency SOS alerts. |
+| **ASHA Worker** | Support patients, coordinate healthcare activities, and respond to assigned cases. |
+| **Doctor** | Review patient information and provide professional healthcare support. |
+| **Admin** | Manage users, monitor platform activity, and oversee the healthcare system. |
+
+### Typical Workflow
+
+1. Patient registers and accesses the platform.
+2. Patient provides symptoms or healthcare information.
+3. AI-assisted assessment provides preliminary guidance.
+4. Cases can be coordinated with ASHA workers or doctors.
+5. Emergency situations can trigger SOS assistance.
+6. Healthcare stakeholders manage activities through their respective dashboards.
