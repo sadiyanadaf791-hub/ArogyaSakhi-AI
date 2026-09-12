@@ -8,14 +8,6 @@ This repository contains the frontend (React + Vite) and backend (FastAPI) for t
 
 ## Features
 
-## Project Workflow
-
-
-
-
-
-
-
 
 
 
