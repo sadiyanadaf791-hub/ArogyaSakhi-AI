@@ -14,7 +14,7 @@ This repository contains the frontend (React + Vite) and backend (FastAPI) for t
 2. Patients can provide health information and request assistance.
 3. AI-assisted features process the available information for preliminary support.
 4. ASHA workers and doctors can review and coordinate patient cases.
-5. Emergency situations can be reported through the SOS workflow.
+
 
 
 
