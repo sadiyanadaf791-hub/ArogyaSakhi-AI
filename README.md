@@ -7,7 +7,14 @@ AI-powered intelligent rural healthcare and emergency assistance platform.
 This repository contains the frontend (React + Vite) and backend (FastAPI) for the ArogyaSakhi AI demo application. The project provides patient management, AI symptom checks, SOS/emergency alerts, and dashboards for multiple roles.
 
 ## Features
+## User Roles
 
+| Role | Main Responsibilities |
+|---|---|
+| Patient | Access healthcare assistance and emergency support |
+| ASHA Worker | Support patients and coordinate assigned cases |
+| Doctor | Review cases and provide professional healthcare support |
+| Admin | Manage users and monitor the platform |
 
 
 
