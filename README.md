@@ -11,7 +11,6 @@ This repository contains the frontend (React + Vite) and backend (FastAPI) for t
 
 | Role | Main Responsibilities |
 |---|---|
-| Patient | Access healthcare assistance and emergency support |
 
 
 
