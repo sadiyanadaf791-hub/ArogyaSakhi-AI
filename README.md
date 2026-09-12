@@ -13,7 +13,7 @@ This repository contains the frontend (React + Vite) and backend (FastAPI) for t
 |---|---|
 | Patient | Access healthcare assistance and emergency support |
 | ASHA Worker | Support patients and coordinate assigned cases |
-| Doctor | Review cases and provide professional healthcare support |
+
 
 
 
