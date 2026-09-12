@@ -10,7 +10,7 @@ This repository contains the frontend (React + Vite) and backend (FastAPI) for t
 
 ## Project Workflow
 
-1. Users log in according to their assigned role.
+
 
 
 
