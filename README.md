@@ -2,7 +2,7 @@
 
 AI-powered intelligent rural healthcare and emergency assistance platform.
 
-## Project Overview
+
 
 
 
